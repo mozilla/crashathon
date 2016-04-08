@@ -15,5 +15,5 @@ class Crash(models.Model):
         db_table = 'crash'
     client_id = models.UUIDField()
     app_version = models.CharField(max_length=8)
-    creation_date = models.DateField()
+    creation_date = models.DateTimeField()
     geo_country = models.CharField(max_length=2)

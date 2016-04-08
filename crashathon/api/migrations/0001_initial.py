@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('client_id', models.UUIDField()),
                 ('app_version', models.CharField(max_length=8)),
-                ('creation_date', models.DateField()),
+                ('creation_date', models.DateTimeField()),
                 ('geo_country', models.CharField(max_length=2)),
             ],
         ),
