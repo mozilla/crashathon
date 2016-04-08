@@ -1,7 +1,3 @@
-# from django.conf import settings
-
-# import elasticsearch
-# from elasticsearch_dsl import Search
 from rest_framework.exceptions import ParseError
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -9,6 +5,7 @@ from rest_framework.views import APIView
 
 
 from crashathon.api.forms import StatsForm
+from crashathon.api.models import collect_id_counts
 
 FAKE_DATA = [27341, 31492, 12048, 3019, 462, 179, 184, 2, 21, 563]
 
@@ -26,8 +23,6 @@ class CrashView(APIView):
             exc = ParseError()
             exc.detail = {'detail': dict(form.errors.items())}
             raise exc
-        # es = elasticsearch.Elasticsearch(hosts=settings.ES_HOSTS)
-        # qs = Search(using=es, index='crashes', doc_type='crash').filter(
-        #     "range", date={"gte": form.start, "lt": form.end})
-        return Response({"binSize": 10, "numBins": 10,
-                         "bins": FAKE_DATA})
+        ids_and_counts = collect_id_counts(form.cleaned_data['start'],
+                                           form.cleaned_data['end'])
+        return Response({"crashes": list(ids_and_counts)})

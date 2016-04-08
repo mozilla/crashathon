@@ -46,40 +46,19 @@ TEMPLATES = []
 
 WSGI_APPLICATION = 'crashathon.wsgi.application'
 
-# ElasticSearch
-# Locally we typically don't run more than 1 elasticsearch node. So we set
-# replicas to zero.
-ES_DEFAULT_NUM_REPLICAS = 0
-ES_DEFAULT_NUM_SHARDS = 5
-ES_HOSTS = [os.getenv('ES_HOST', '127.0.0.1:9200')]
-ES_INDEXES = {}
-ES_URLS = ['http://%s' % h for h in ES_HOSTS]
-ES_USE_PLUGINS = False
-ES_TIMEOUT = 3
-
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {}
-
-
-# Password validation
-# https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
-
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'crashathon',
+        'USER': 'washort',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
 
 
 # Internationalization
@@ -96,7 +75,7 @@ USE_L10N = False
 USE_TZ = True
 
 
-TEST_RUNNER = "crashathon.testrunner.TestRunner"
+#TEST_RUNNER = "green.djangorunner.DjangoRunner"
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ()
