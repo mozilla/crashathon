@@ -75,7 +75,7 @@ USE_L10N = False
 USE_TZ = True
 
 
-#TEST_RUNNER = "green.djangorunner.DjangoRunner"
+TEST_RUNNER = "green.djangorunner.DjangoRunner"
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ()
