@@ -34,6 +34,64 @@ class TestCrashHistogramView(TestCase):
             "crashes": [{"count": c, "client_id": str(u)}
                         for c, u in zip(counts, uuids)]})
 
+    def test_country_filter(self):
+        client_id = uuid.uuid4()
+        Crash.objects.create(
+            client_id=client_id,
+            app_version='45.0',
+            geo_country='DE',
+            creation_date=datetime.date(2016, 1, 15))
+        Crash.objects.create(
+            client_id=client_id,
+            app_version='45.0',
+            geo_country='DE',
+            creation_date=datetime.date(2016, 1, 16))
+        Crash.objects.create(
+            client_id=client_id,
+            app_version='45.0',
+            geo_country='PL',
+            creation_date=datetime.date(2016, 1, 15))
+        res = self.client.get(self.url, data={"start": "20160101",
+                                              "end": "20160201",
+                                              "country": "DE"})
+        self.assertEqual(res.json(),
+                         {"crashes": [{"client_id": str(client_id), "count": 2}]})
+
+        res = self.client.get(self.url, data={"start": "20160101",
+                                              "end": "20160201",
+                                              "country": "PL"})
+        self.assertEqual(res.json(),
+                         {"crashes": [{"client_id": str(client_id), "count": 1}]})
+
+    def test_version_filter(self):
+        client_id = uuid.uuid4()
+        Crash.objects.create(
+            client_id=client_id,
+            app_version='44.0',
+            geo_country='DE',
+            creation_date=datetime.date(2016, 1, 15))
+        Crash.objects.create(
+            client_id=client_id,
+            app_version='45.0',
+            geo_country='US',
+            creation_date=datetime.date(2016, 1, 16))
+        Crash.objects.create(
+            client_id=client_id,
+            app_version='45.0',
+            geo_country='PL',
+            creation_date=datetime.date(2016, 1, 15))
+        res = self.client.get(self.url, data={"start": "20160101",
+                                              "end": "20160201",
+                                              "version": "45.0"})
+        self.assertEqual(res.json(),
+                         {"crashes": [{"client_id": str(client_id), "count": 2}]})
+
+        res = self.client.get(self.url, data={"start": "20160101",
+                                              "end": "20160201",
+                                              "version": "44.0"})
+        self.assertEqual(res.json(),
+                         {"crashes": [{"client_id": str(client_id), "count": 1}]})
+
     def test_invalid_date(self):
         """
         Invalid dates are rejected.

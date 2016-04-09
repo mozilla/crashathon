@@ -23,6 +23,5 @@ class CrashView(APIView):
             exc = ParseError()
             exc.detail = {'detail': dict(form.errors.items())}
             raise exc
-        ids_and_counts = collect_id_counts(form.cleaned_data['start'],
-                                           form.cleaned_data['end'])
-        return Response({"crashes": list(ids_and_counts)})
+        ids_and_counts = collect_id_counts(**form.cleaned_data)
+        return Response({"crashes": ids_and_counts})

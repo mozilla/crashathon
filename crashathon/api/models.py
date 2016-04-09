@@ -3,11 +3,16 @@ from django.db import models
 from django.db.models import Count
 
 
-def collect_id_counts(start, end):
-    return Crash.objects.filter(
+def collect_id_counts(start, end, country=None, version=None):
+    q = Crash.objects.filter(
         creation_date__gte=start,
-        creation_date__lt=end
-    ).values('client_id').annotate(count=Count('client_id')).order_by("-count")
+        creation_date__lt=end)
+    if country:
+        q = q.filter(geo_country=country)
+    if version:
+        q = q.filter(app_version=version)
+    return (q.values('client_id').annotate(count=Count('client_id'))
+            .order_by('-count'))
 
 
 class Crash(models.Model):
