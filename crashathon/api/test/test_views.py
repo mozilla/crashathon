@@ -35,6 +35,9 @@ class TestCrashHistogramView(TestCase):
                         for c, u in zip(counts, uuids)]})
 
     def test_country_filter(self):
+        """
+        Records are excluded from crash counts that do not match country.
+        """
         client_id = uuid.uuid4()
         Crash.objects.create(
             client_id=client_id,
@@ -64,6 +67,9 @@ class TestCrashHistogramView(TestCase):
                          {"crashes": [{"client_id": str(client_id), "count": 1}]})
 
     def test_version_filter(self):
+        """
+        Records are excluded that do not match version.
+        """
         client_id = uuid.uuid4()
         Crash.objects.create(
             client_id=client_id,
