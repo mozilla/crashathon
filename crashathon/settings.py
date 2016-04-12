@@ -79,5 +79,8 @@ USE_TZ = False
 TEST_RUNNER = "green.djangorunner.DjangoRunner"
 
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': ()
+    'DEFAULT_AUTHENTICATION_CLASSES': (),
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
 }
