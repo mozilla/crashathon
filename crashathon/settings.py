@@ -42,6 +42,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'crashathon.middleware.CORSMiddleware'
 ]
 
 ROOT_URLCONF = 'crashathon.urls'
