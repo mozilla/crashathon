@@ -30,9 +30,7 @@ class TestCrashHistogramView(TestCase):
                     creation_date=next(dayctr))
         res = self.client.get(self.url, data={"start": "20160101",
                                               "end": "20160201"})
-        self.assertEqual(res.json(), {
-            "crashes": [{"count": c, "client_id": str(u)}
-                        for c, u in zip(counts, uuids)]})
+        self.assertEqual(res.json(), {"crashes": counts})
 
     def test_country_filter(self):
         """
@@ -57,14 +55,12 @@ class TestCrashHistogramView(TestCase):
         res = self.client.get(self.url, data={"start": "20160101",
                                               "end": "20160201",
                                               "country": "DE"})
-        self.assertEqual(res.json(),
-                         {"crashes": [{"client_id": str(client_id), "count": 2}]})
+        self.assertEqual(res.json(), {"crashes": [2]})
 
         res = self.client.get(self.url, data={"start": "20160101",
                                               "end": "20160201",
                                               "country": "PL"})
-        self.assertEqual(res.json(),
-                         {"crashes": [{"client_id": str(client_id), "count": 1}]})
+        self.assertEqual(res.json(), {"crashes": [1]})
 
     def test_version_filter(self):
         """
@@ -89,14 +85,12 @@ class TestCrashHistogramView(TestCase):
         res = self.client.get(self.url, data={"start": "20160101",
                                               "end": "20160201",
                                               "version": "45.0"})
-        self.assertEqual(res.json(),
-                         {"crashes": [{"client_id": str(client_id), "count": 2}]})
+        self.assertEqual(res.json(), {"crashes": [2]})
 
         res = self.client.get(self.url, data={"start": "20160101",
                                               "end": "20160201",
                                               "version": "44.0"})
-        self.assertEqual(res.json(),
-                         {"crashes": [{"client_id": str(client_id), "count": 1}]})
+        self.assertEqual(res.json(), {"crashes": [1]})
 
     def test_invalid_date(self):
         """
