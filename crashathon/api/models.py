@@ -11,8 +11,10 @@ def collect_id_counts(start, end, country=None, version=None):
         q = q.filter(geo_country=country)
     if version:
         q = q.filter(app_version=version)
-    return (q.values('client_id').annotate(count=Count('client_id'))
-            .order_by('-count'))
+    return (q.values('client_id')
+             .annotate(count=Count('client_id'))
+             .order_by('-count')
+             .values_list('count', flat=True))
 
 
 class Crash(models.Model):
