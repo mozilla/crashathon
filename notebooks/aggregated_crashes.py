@@ -24,6 +24,7 @@
 
 # <codecell>
 
+import os
 import datetime
 import ujson as json
 from moztelemetry import get_pings
@@ -104,7 +105,8 @@ def store_crashes(channel, start_date, end_date, fraction):
         'end_date': end_date.isoformat(),
     }
     # write the data
-    with open('crashes_%s.json' % channel, 'w') as json_file:
+    output_path = os.path.join('output', 'crashes_%s.json' % channel)
+    with open(output_path, 'w') as json_file:
         json.dump(data, json_file)
 
 # <markdowncell>
