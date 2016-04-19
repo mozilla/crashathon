@@ -5,23 +5,6 @@
 
 # Crashathon -- a Firefox crash collator
 
-# Please convert this Python file to an IPython/Jupyter notebook using the
-# Makefile:
-#
-#  cd path/to/crashathon/notebooks
-#  make
-#
-# A recent IPython with notebook support is required to run the Make task.
-#
-# The notebook will write the result to files named in the form:
-#
-#   crashes_<channel>.json
-#
-# Once configured as scheduled Spark jobs they can be downloaded from the
-# Spark job cluster:
-#
-#   https://analysis-output.telemetry.mozilla.org/<job-name>/data/crashes_<channel>.json
-
 # <codecell>
 
 import os
