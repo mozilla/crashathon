@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 # <nbformat>3.0</nbformat>
-#
+
+# <headingcell level=1>
+
+# Crashathon -- a Firefox crash collator
+
 # Please convert this Python file to an IPython/Jupyter notebook using the
 # Makefile:
 #
@@ -17,10 +21,6 @@
 # Spark job cluster:
 #
 #   https://analysis-output.telemetry.mozilla.org/<job-name>/data/crashes_<channel>.json
-#
-# <markdowncell>
-
-# Crashathon -- a Firefox crash collator
 
 # <codecell>
 
@@ -29,14 +29,14 @@ import datetime
 import ujson as json
 from moztelemetry import get_pings
 
-# <markdowncell>
+# <headingcell level=2>
 
-## Some configuration variables
+# Some configuration variables
 
 # <codecell>
 
 #: Number of days to fetch crash pings for
-DAYS = 30
+DAYS = 1
 
 #: Fraction of pings to fetch
 FRACTION = 1
@@ -44,9 +44,9 @@ FRACTION = 1
 #: The build channels to fetch and store crash pings for
 CHANNELS = [
     'nightly',
-    'aurora',
-    'beta',
-    'release',
+    # 'aurora',
+    # 'beta',
+    # 'release',
 ]
 
 #: The time is now
@@ -112,9 +112,9 @@ def store_crashes(channel, start_date, end_date, fraction):
     with open(output_path, 'w') as json_file:
         json.dump(data, json_file)
 
-# <markdowncell>
+# <headingcell level=2>
 
-## Store the aggregated crashes to disk for all configured channels
+# Store the aggregated crashes to disk for all configured channels
 
 # <codecell>
 
