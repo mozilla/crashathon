@@ -36,7 +36,7 @@ from moztelemetry import get_pings
 # <codecell>
 
 #: Number of days to fetch crash pings for
-DAYS = 1
+DAYS = 30
 
 #: Fraction of pings to fetch
 FRACTION = 1
@@ -44,9 +44,9 @@ FRACTION = 1
 #: The build channels to fetch and store crash pings for
 CHANNELS = [
     'nightly',
-    # 'aurora',
-    # 'beta',
-    # 'release',
+    'aurora',
+    'beta',
+    'release',
 ]
 
 #: The time is now
